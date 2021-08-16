@@ -11,6 +11,9 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>14</maven.compiler.source>
     <maven.compiler.target>14</maven.compiler.target>
+    <checkstyle.confic.location>
+      C:\projects\job4j_design\checkstyle.xml
+    </checkstyle.confic.location>
   </properties>
 
   <dependencies>
