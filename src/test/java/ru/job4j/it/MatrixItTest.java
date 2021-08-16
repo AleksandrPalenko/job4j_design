@@ -17,6 +17,7 @@ public class MatrixItTest {
         assertThat(it.next(), is(1));
     }
 
+
     @Test
     public void whenFirstEmptyThenNext() {
         int[][] in = {
