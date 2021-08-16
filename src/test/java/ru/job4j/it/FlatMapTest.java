@@ -4,10 +4,12 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+@SuppressWarnings("ALL")
 public class FlatMapTest {
     @Test
     public void whenDiffNext() {
