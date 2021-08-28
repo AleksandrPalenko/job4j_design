@@ -6,6 +6,18 @@ import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
 
+    public static void main(String[] args) {
+        List<String> string = new SimpleArrayList<>(10);
+        string.add("big");
+        string.add("big2");
+        string.add("big3");
+
+        System.out.println(string.remove(0));
+        for (int i = 0; i < string.size(); i++) {
+            System.out.println(string.size());
+        }
+    }
+
     private T[] container;
 
     private int size;
@@ -19,11 +31,11 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public void add(T value) {
+        modCount++;
         if (size >= container.length) {
-            container = Arrays.copyOf(container, size * 2);
-            container[size++] = value;
-            modCount++;
+            container = Arrays.copyOf(container, container.length * 2);
         }
+        container[size++] = value;
     }
 
     @Override
@@ -35,24 +47,24 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public T remove(int index) {
+        modCount++;
         int numMoved = size - index - 1;
         if (size < container.length) {
             Objects.checkIndex(index, size);
             System.arraycopy(this.container, index + 1, this.container, index, numMoved);
-            modCount++;
         }
         return container[index];
     }
 
     @Override
     public T get(int index) {
-        Objects.checkIndex(index, size);
+        Objects.checkIndex(index, container.length);
         return container[index];
     }
 
     @Override
     public int size() {
-        return 1;
+        return container.length;
     }
 
     @Override
