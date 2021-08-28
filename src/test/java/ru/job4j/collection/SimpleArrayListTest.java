@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 
 public class SimpleArrayListTest {
 
+
     List<Integer> list;
 
     @Before
