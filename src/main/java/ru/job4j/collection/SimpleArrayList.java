@@ -41,19 +41,20 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public T set(int index, T newValue) {
         Objects.checkIndex(index, size);
+        T val = container[index];
         container[index] = newValue;
-        return newValue;
+        return val;
     }
 
     @Override
     public T remove(int index) {
+        Objects.checkIndex(index, size);
+        T val = container[index];
+        System.arraycopy(container, index + 1, container, index, container.length - 1 - index);
+        container[container.length - 1] = null;
         modCount++;
-        int numMoved = size - index - 1;
-        if (size < container.length) {
-            Objects.checkIndex(index, size);
-            System.arraycopy(this.container, index + 1, this.container, index, numMoved);
-        }
-        return container[index];
+        size--;
+        return val;
     }
 
     @Override
@@ -69,7 +70,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             int position = 0;
             final int expectedModCount = modCount;
 
