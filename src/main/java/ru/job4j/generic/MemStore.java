@@ -9,18 +9,13 @@ public final class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public void add(T model) {
-        for (String s : mem.keySet()) {
-            if (!mem.containsKey(s)) {
-                mem.put(model.getId(), model);
-            }
-        }
-
+        mem.put(model.getId(), model);
     }
 
     @Override
     public boolean replace(String id, T model) {
-            T value = mem.get(id);
-            return mem.replace(id, model, value);
+        T value = mem.get(id);
+        return mem.replace(id, value, model);
     }
 
     @Override
@@ -36,5 +31,12 @@ public final class MemStore<T extends Base> implements Store<T> {
     @Override
     public T findById(String id) {
         return mem.get(id);
+    }
+
+    public static void out(int n) {
+        for (int index = 0; index < n; index++) {
+            System.out.println(index);
+        }
+
     }
 }
