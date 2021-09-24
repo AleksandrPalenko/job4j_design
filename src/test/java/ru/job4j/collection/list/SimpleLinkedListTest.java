@@ -2,12 +2,28 @@ package ru.job4j.collection.list;
 
 import org.hamcrest.core.Is;
 import org.junit.Test;
-
 import java.util.Iterator;
 
 import static org.junit.Assert.*;
 
 public class SimpleLinkedListTest {
+
+    @Test
+    public void whenListIsNotEmpty() {
+        List<Integer> rsl = new SimpleLinkedList<>();
+        rsl.add(3);
+        rsl.add(4);
+        rsl.add(5);
+    }
+
+    @Test
+    public void whenAddAndGetOneMore() {
+        List<Integer> list = new SimpleLinkedList<>();
+        list.add(null);
+        list.add(null);
+        assertNull(list.get(0));
+        assertNull(list.get(1));
+    }
 
     @Test
     public void whenAddAndGet() {
@@ -45,6 +61,23 @@ public class SimpleLinkedListTest {
         assertThat(second.hasNext(), Is.is(true));
         assertThat(second.next(), Is.is(2));
         assertThat(second.hasNext(), Is.is(false));
+    }
+
+    @Test
+    public void whenGetIteratorOneMore() {
+        List<Integer> list = new SimpleLinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        Iterator<Integer> step = list.iterator();
+        assertThat(step.hasNext(), Is.is(true));
+        assertThat(step.next(), Is.is(1));
+        assertThat(step.hasNext(), Is.is(true));
+        assertThat(step.next(), Is.is(2));
+        assertThat(step.hasNext(), Is.is(true));
+        assertThat(step.next(), Is.is(3));
+        assertThat(step.hasNext(), Is.is(false));
     }
 
 }
