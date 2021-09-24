@@ -15,6 +15,7 @@ public class SimpleLinkedList<E> implements List<E> {
         Node<E> nextElement;
 
         public Node(E value) {
+            this.currentElement = value;
         }
 
         public E getCurrentElement() {
@@ -30,6 +31,7 @@ public class SimpleLinkedList<E> implements List<E> {
     public void add(E value) {
         if (head == null) {
             head = new Node<>(value);
+            size++;
             return;
         }
         Node<E> node = head;
