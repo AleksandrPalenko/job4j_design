@@ -6,6 +6,8 @@ public class SimpleStack<T> {
 
     private final ForwardLinked<T> linked = new ForwardLinked<T>();
 
+    private int size;
+
     public void addFirst(T value) {
         if (head == null) {
             head = new Node<>(value);
@@ -32,7 +34,6 @@ public class SimpleStack<T> {
     }
 
     private Node<T> head;
-    private int size;
 
     public static class Node<T> {
         T currentElement;

@@ -22,9 +22,7 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int size;
 
-    private int modCount; //чтобы нарушился для итератора. И чтобы это не происходило ввели такой параметр.
-    // Это счётчик количества изменений(добавлений, удалений элементов) чтобы до создания итератора и после было равное количество
-
+    private int modCount;
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
