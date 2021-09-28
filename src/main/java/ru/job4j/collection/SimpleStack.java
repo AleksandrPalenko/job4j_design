@@ -15,6 +15,10 @@ public class SimpleStack<T> {
         }
     }
 
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
     public T deleteFirst() {
         Node<T> tmp = head;
         if (head != null) {
