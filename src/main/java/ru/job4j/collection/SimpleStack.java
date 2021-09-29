@@ -20,12 +20,13 @@ public class SimpleStack<T> {
     }
 
     public T deleteFirst() {
-        Node<T> tmp = head;
-        if (head != null) {
-            head = head.nextElement;
-        } else {
-            throw new NoSuchElementException();
+        if (head == null) {
+            throw new NoSuchElementException("No elements");
         }
+        Node<T> tmp = head;
+        head = tmp.nextElement;
+        tmp.nextElement = null;
+        size--;
         return tmp.currentElement;
     }
 
