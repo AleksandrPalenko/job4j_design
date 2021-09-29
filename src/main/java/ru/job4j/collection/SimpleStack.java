@@ -1,51 +1,20 @@
 package ru.job4j.collection;
 
-import java.util.NoSuchElementException;
-
 public class SimpleStack<T> {
 
     private final ForwardLinked<T> linked = new ForwardLinked<T>();
 
     private int size;
 
-    public void addFirst(T value) {
-        if (head == null) {
-            head = new Node<>(value);
-            size++;
-        }
-    }
-
     public boolean isEmpty() {
         return size == 0;
     }
 
-    public T deleteFirst() {
-        if (head == null) {
-            throw new NoSuchElementException("No elements");
-        }
-        Node<T> tmp = head;
-        head = tmp.nextElement;
-        tmp.nextElement = null;
-        size--;
-        return tmp.currentElement;
-    }
-
     public T pop() {
-        return deleteFirst();
+        return linked.deleteFirst();
     }
 
     public void push(T value) {
-        addFirst(value);
-    }
-
-    private Node<T> head;
-
-    public static class Node<T> {
-        T currentElement;
-        Node<T> nextElement;
-
-        public Node(T value) {
-            this.currentElement = value;
-        }
+        linked.addFirst(value);
     }
 }
