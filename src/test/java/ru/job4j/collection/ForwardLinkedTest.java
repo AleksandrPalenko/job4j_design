@@ -10,6 +10,7 @@ import static org.junit.Assert.assertThat;
 
 public class ForwardLinkedTest {
 
+
     @Test(expected = NoSuchElementException.class)
     public void whenDeleteFirst() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
