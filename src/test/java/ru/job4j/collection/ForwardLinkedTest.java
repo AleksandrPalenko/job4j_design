@@ -45,7 +45,7 @@ public class ForwardLinkedTest {
         assertThat(it.next(), is(2));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void whenAddAndRevertThenIter() {
         ForwardLinked<Integer> linked = new ForwardLinked<>();
         linked.add(1);
