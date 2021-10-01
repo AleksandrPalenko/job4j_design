@@ -25,7 +25,7 @@ public class SimpleStackTest {
         assertThat(stack.pop(), is(2));
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void whenPushPushThenPollPoll() {
         SimpleStack<Integer> stack = new SimpleStack<>();
         stack.push(1);
