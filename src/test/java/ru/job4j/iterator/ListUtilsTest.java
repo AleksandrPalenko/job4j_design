@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 
 import static org.junit.Assert.assertThat;
 
+
 public class ListUtilsTest {
 
     @Test
