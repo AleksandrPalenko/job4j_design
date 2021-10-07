@@ -5,17 +5,7 @@ import ru.job4j.list.List;
 import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
-
-    public static void main(String[] args) {
-        List<String> string = new SimpleArrayList<>(10);
-        string.add("big");
-        string.add("big2");
-        string.add("big3");
-
-        System.out.println(string.remove(0));
-        for (int i = 0; i < string.size(); i++) {
-            System.out.println(string.size());
-        }
+    public SimpleArrayList() {
     }
 
     private T[] container;
