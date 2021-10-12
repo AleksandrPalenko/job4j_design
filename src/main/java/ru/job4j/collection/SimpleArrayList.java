@@ -6,6 +6,7 @@ import java.util.*;
 
 public class SimpleArrayList<T> implements List<T> {
     public SimpleArrayList() {
+        this(10);
     }
 
     private T[] container;
@@ -20,7 +21,7 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public void add(T value) {
         modCount++;
-        if (size >= container.length) {
+        if (size == container.length) {
             container = Arrays.copyOf(container, container.length * 2);
         }
         container[size++] = value;
