@@ -26,7 +26,7 @@ public class User {
         User user2 = new User("Nikolay", 0, birthday);
         map.put(user1, new Object());
         map.put(user2, new Object());
-        for (Map.Entry<User, Object> maps: map.entrySet() ) {
+        for (Map.Entry<User, Object> maps: map.entrySet()) {
             User data = maps.getKey();
             System.out.println(hash(data.hashCode()));
         }
