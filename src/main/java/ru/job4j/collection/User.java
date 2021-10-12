@@ -2,8 +2,6 @@ package ru.job4j.collection;
 
 import java.util.*;
 
-import static java.util.Objects.hash;
-
 public class User {
 
     public static Map<User, Object> map = new HashMap<>();
@@ -19,7 +17,7 @@ public class User {
         User.date = date;
     }
     public static void main(String[] args) {
-        User user1 = new User("Igor", 1, date);
+        User user1 = new User("Nikolay", 0, date);
         User user2 = new User("Nikolay", 0, date);
         map.put(user1, new Object());
         map.put(user2, new Object());
@@ -28,10 +26,5 @@ public class User {
             System.out.println(maps);
             System.out.println(data.hashCode());
         }
-    }
-    
-    @Override
-    public int hashCode() {
-        return hash(name, children);
     }
 }
