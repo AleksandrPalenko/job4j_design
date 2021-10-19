@@ -1,10 +1,12 @@
 package ru.job4j.map;
 
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+import static org.junit.Assert.*;
 
 
 public class SimpleMapTest {
@@ -21,37 +23,55 @@ public class SimpleMapTest {
     @Test
     public void whenPutItInAndDeleteIt() {
         Map<String, String> map = new SimpleMap<>();
-        Assert.assertTrue(map.put("Toyota", "car"));
-        Assert.assertFalse(map.put("Toyota", "car"));
-        Assert.assertTrue(map.put("Lada", "car"));
-        Assert.assertTrue(map.remove("Lada"));
-        Assert.assertTrue(map.remove("Toyota"));
-        Assert.assertFalse(map.remove("BMW"));
+        assertTrue(map.put("Toyota", "car"));
+        assertFalse(map.put("Toyota", "car"));
+        assertTrue(map.put("Lada", "car"));
+        assertTrue(map.remove("Lada"));
+        assertTrue(map.remove("Toyota"));
+        assertFalse(map.remove("BMW"));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenGetIteratorFromEmptyMapThenNextThrowException() {
+        Map<String, Integer> map = new SimpleMap<>();
+        map.iterator().next();
     }
 
     @Test
-    public void whenPutInAndGetIt() {
+    public void whenAddTwoEntriesButGetEmptyBucket() {
+        Map<String, Integer> map = new SimpleMap<>();
+        map.put("one", 1);
+        map.put("two", 2);
+        assertNull(map.get("three"));
+    }
+
+    @Test
+    public void whenAddEntriesThenRemoveIt() {
         map = new SimpleMap<>();
-        Assert.assertEquals("test", map.get("firstCar"));
-        Assert.assertEquals("testMore", map.get("secondCar"));
+        map.put("one", "1");
+        assertTrue(map.remove("one"));
+        assertNull(map.get("one"));
     }
 
-    @Test
-    public void whenAssertNull() {
-        Map<String, String> map = new SimpleMap<>();
-        //map.put("firstCar", "test");
-        Assert.assertNull(map.get(""));
-    }
-
-    @Test
-    public void whenCheckIterator() {
-        map = new SimpleMap<>();
+    @Test(expected = ConcurrentModificationException.class)
+    public void whenGetIteratorThenMustBeException() {
+        Map<String, Integer> map = new SimpleMap<>();
         Iterator<String> iterator = map.iterator();
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals("Two", iterator.next());
-        Assert.assertTrue(iterator.hasNext());
-        Assert.assertEquals("One", iterator.next());
-        Assert.assertFalse(iterator.hasNext());
+        map.put("first", 1);
+        iterator.next();
     }
 
+    @Test
+    public void whenGetIteratorMultipleTimes() {
+        Map<String, Integer> map = new SimpleMap<>();
+        map.put("car", 1);
+        map.put("bar", 2);
+        Iterator<String> iterator = map.iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals("bar", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("car", iterator.next());
+        assertFalse(iterator.hasNext());
+
+    }
 }

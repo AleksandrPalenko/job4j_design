@@ -80,7 +80,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return position < size;
+                while (table[position] == null && position < table.length - 1) {
+                    position++;
+                }
+                return table[position] != null;
             }
 
             @Override
@@ -88,7 +91,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (K) table[position++];
+                return table[position++].key;
             }
         };
     }
@@ -101,6 +104,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
         public MapEntry(K key, V value) {
             this.key = key;
             this.value = value;
+        }
+
+        public MapEntry() {
+
         }
     }
 }
