@@ -8,7 +8,6 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
-
 public class SimpleMapTest {
 
     Map<String, String> map;
@@ -22,10 +21,10 @@ public class SimpleMapTest {
 
     @Test
     public void whenPutItInAndDeleteIt() {
-        Map<String, String> map = new SimpleMap<>();
-        assertTrue(map.put("Toyota", "car"));
-        assertFalse(map.put("Toyota", "car"));
-        assertTrue(map.put("Lada", "car"));
+        Map<String, Integer> map = new SimpleMap<>();
+        assertTrue(map.put("Toyota", 1));
+        assertFalse(map.put("Toyota", 1));
+        assertTrue(map.put("Lada", 3));
         assertTrue(map.remove("Lada"));
         assertTrue(map.remove("Toyota"));
         assertFalse(map.remove("BMW"));

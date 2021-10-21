@@ -1,7 +1,6 @@
 package ru.job4j.map;
 
 import java.util.ConcurrentModificationException;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -21,7 +20,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     @Override
     public boolean put(K key, V value) {
-        if (capacity == LOAD_FACTOR) {
+        if ((float) count / capacity >= LOAD_FACTOR) {
             expand();
         }
         int idx = indexFor(hash(key.hashCode()));
@@ -43,18 +42,20 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private void expand() {
-        if (size >= LOAD_FACTOR) {
-            capacity = capacity * 2;
+        capacity = capacity * 2;
+        MapEntry<K, V>[] tableNew = new MapEntry[capacity];
+        for (MapEntry<K, V> tbl : tableNew) {
+            if (tbl != null) {
+                put(tbl.key, tbl.value);
+            }
         }
+        table = tableNew;
     }
 
     @Override
     public V get(K key) {
         int idx = indexFor(hash(key.hashCode()));
-        if (table[idx] != null && table[idx].key.equals(key)) {
-            return table[idx].value;
-        }
-        return null;
+        return table[idx] != null && table[idx].key.equals(key) ? table[idx].value : null;
     }
 
     @Override
@@ -108,6 +109,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
         public MapEntry() {
 
+        }
+
+        public K getKey() {
+            return key;
         }
     }
 }
