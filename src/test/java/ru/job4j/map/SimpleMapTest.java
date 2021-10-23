@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 
 import static org.junit.Assert.*;
 
+
 public class SimpleMapTest {
 
     Map<String, String> map;
