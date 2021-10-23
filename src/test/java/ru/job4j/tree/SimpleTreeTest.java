@@ -1,11 +1,28 @@
 package ru.job4j.tree;
 
+import org.junit.Assert;
 import org.junit.Test;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 
 public class SimpleTreeTest {
+
+    @Test
+    public void whenBinaryTreeIsTrue() {
+        Tree<Integer> tree = new SimpleTree<>(1);
+        tree.add(1, 3);
+        tree.add(1, 3);
+        tree.add(3, 1);
+        assertTrue(tree.isBinary());
+    }
+
+    @Test
+    public void whenTreeIsEmptyThenTrue() {
+        Tree<Integer> tree = new SimpleTree<>(1);
+        assertTrue(tree.isBinary());
+    }
+
     @Test
     public void when6ElFindLastThen6() {
         Tree<Integer> tree = new SimpleTree<>(1);
