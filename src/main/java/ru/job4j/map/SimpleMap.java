@@ -14,23 +14,21 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private int modCount = 0;
 
-    private int size;
-
     private MapEntry<K, V>[] table = new MapEntry[capacity];
 
     @Override
     public boolean put(K key, V value) {
-        if ((float) count / capacity >= LOAD_FACTOR) {
+        int idx = indexFor(hash(key.hashCode()));
+        boolean rsl = table[idx] == null;
+        if (capacity * LOAD_FACTOR <= count) {
             expand();
         }
-        int idx = indexFor(hash(key.hashCode()));
-        if (table[idx] == null) {
+        if (rsl) {
             table[idx] = new MapEntry<>(key, value);
             count++;
             modCount++;
-            return true;
         }
-        return false;
+        return rsl;
     }
 
     private int hash(int hashCode) {
@@ -43,13 +41,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     private void expand() {
         capacity = capacity * 2;
+        MapEntry<K, V>[] tmp = table;
         MapEntry<K, V>[] tableNew = new MapEntry[capacity];
-        for (MapEntry<K, V> tbl : tableNew) {
+        for (MapEntry<K, V> tbl : tmp) {
             if (tbl != null) {
-                put(tbl.key, tbl.value);
+                this.put(tbl.key, tbl.value);
             }
         }
-        table = tableNew;
     }
 
     @Override
@@ -61,13 +59,13 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         int idx = indexFor(hash(key.hashCode()));
-        if (table[idx] != null && table[idx].key.equals(key)) {
+        boolean rsl = table[idx] != null && table[idx].key.equals(key);
+        if (rsl) {
             table[idx].value = null;
             count--;
             modCount++;
-            return true;
         }
-        return false;
+            return rsl;
     }
 
     @Override
@@ -107,12 +105,5 @@ public class SimpleMap<K, V> implements Map<K, V> {
             this.value = value;
         }
 
-        public MapEntry() {
-
-        }
-
-        public K getKey() {
-            return key;
-        }
     }
 }
