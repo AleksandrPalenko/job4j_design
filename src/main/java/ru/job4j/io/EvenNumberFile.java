@@ -13,10 +13,8 @@ public class EvenNumberFile {
             String[] lines = text.toString().split(System.lineSeparator());
             for (String line : lines) {
                int number = Integer.parseInt(line);
-                    if (number % 2 == 0) {
-                        System.out.println(number + " the number is even");
-                }
-                System.out.println(number + "  numbers are not even");
+                    String rsl = number % 2 == 0 ? "This is even" : "This is not even";
+                System.out.println(rsl + " " + number);
             }
         } catch (Exception e) {
             e.printStackTrace();
