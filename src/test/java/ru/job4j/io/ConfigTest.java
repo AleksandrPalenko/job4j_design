@@ -1,0 +1,35 @@
+package ru.job4j.io;
+
+import org.hamcrest.Matchers;
+import org.junit.Test;
+import org.junit.rules.ExpectedException;
+
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.*;
+
+public class ConfigTest {
+
+    @Test
+    public void whenPairWithoutComment() {
+        String path = "src/main/java/ru/job4j/data/pair_without_comment.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("app"), is("NetServer"));
+    }
+
+    @Test
+    public void whenPairWithComment() {
+        String path = "src/main/java/ru/job4j/data/pair_with_comment.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("hibernate.dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenTestWithException() {
+        String path = "src/main/java/ru/job4j/data/pair_with_exception.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value(""), is("password"));
+    }
+}
