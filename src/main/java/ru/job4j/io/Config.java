@@ -20,8 +20,12 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(this.path))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                String[] str = line.split("=");
-                values.put(str[0], str[1]);
+                if (!line.isEmpty() && !line.startsWith("#")) {
+                    String[] str = line.split("=");
+                    if (str.length > 2) {
+                        values.put(str[0], str[1]);
+                    }
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();

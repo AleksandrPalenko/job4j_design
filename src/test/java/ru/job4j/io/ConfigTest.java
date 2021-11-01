@@ -30,6 +30,5 @@ public class ConfigTest {
         String path = "src/main/java/ru/job4j/data/pair_with_exception.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value(""), is("password"));
     }
 }
