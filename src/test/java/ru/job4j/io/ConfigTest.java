@@ -14,7 +14,7 @@ public class ConfigTest {
         String path = "src/main/java/ru/job4j/data/pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("app"), is("NetServer"));
+        assertThat(config.value("hibernate.connection.driver_class"), is("org.postgresql.Driver"));
     }
 
     @Test
@@ -22,7 +22,7 @@ public class ConfigTest {
         String path = "src/main/java/ru/job4j/data/pair_with_comment.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("hibernate.dialect"), is("org.hibernate.dialect.PostgreSQLDialect"));
+        assertThat(config.value("hibernate.connection.username"), is("postgres"));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -30,5 +30,13 @@ public class ConfigTest {
         String path = "src/main/java/ru/job4j/data/pair_with_exception.properties";
         Config config = new Config(path);
         config.load();
+    }
+
+    @Test
+    public void whenPairWithEmptyLine() {
+        String path = "src/main/java/ru/job4j/data/pair_without_comment.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("hibernate.connection.password"), is("password"));
     }
 }

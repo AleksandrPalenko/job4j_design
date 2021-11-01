@@ -20,11 +20,12 @@ public class Config {
     public void load() {
         try (BufferedReader in = new BufferedReader(new FileReader(this.path))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                if (!line.isEmpty() && !line.startsWith("#")) {
+                if (!line.isEmpty() && !line.startsWith("#") && line.contains("=")) {
                     String[] str = line.split("=");
-                    if (str.length > 2) {
-                        values.put(str[0], str[1]);
+                    if (str.length != 2 || str[0].isEmpty()) {
+                        throw new IllegalArgumentException("Unknown element passed");
                     }
+                    values.put(str[0], str[1]);
                 }
             }
         } catch (IOException e) {
@@ -44,7 +45,7 @@ public class Config {
     }
 
     public String value(String key) {
-        return value(key);
+        return values.get(key);
     }
 
     public static void main(String[] args) {
