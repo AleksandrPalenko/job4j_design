@@ -5,7 +5,6 @@ import java.util.*;
 public class User {
 
     public static Map<User, Object> map = new HashMap<>();
-    
     private String name;
     private int children;
     private static Calendar birthday = new GregorianCalendar(1975, Calendar.OCTOBER, 6);
@@ -16,15 +15,36 @@ public class User {
         this.children = children;
         User.date = date;
     }
+
     public static void main(String[] args) {
         User user1 = new User("Nikolay", 0, date);
         User user2 = new User("Nikolay", 0, date);
         map.put(user1, new Object());
         map.put(user2, new Object());
-        for (Map.Entry<User, Object> maps: map.entrySet()) {
+        for (Map.Entry<User, Object> maps : map.entrySet()) {
             User data = maps.getKey();
             System.out.println(maps);
             System.out.println(data.hashCode());
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return children == user.children && Objects.equals(name, user.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, children);
+    }
+
+
 }
+
