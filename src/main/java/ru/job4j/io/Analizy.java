@@ -17,11 +17,14 @@ public class Analizy {
                 new BufferedOutputStream(
                         new FileOutputStream(target)
                 ))) {
+            boolean status = false;
             for (String[] line: rsl) {
-                if (line[0].equals("400") || line[0].equals("500")) {
-                    writer.println("server is down " + line[1]);
-                } else if (line[0].equals("200")) {
-                    writer.println("server is up " + line[1]);
+                if (!status && (line[0].equals("400") || line[0].equals("500"))) {
+                    status = true;
+                    writer.print(line[1] + ";");
+                } else if (status && (line[0].equals("200") || line[0].equals("300"))) {
+                    status = false;
+                    writer.println(line[1]);
                 }
             }
         } catch (Exception e) {
