@@ -9,12 +9,12 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.*;
-import java.util.List;
 
 public class AnalizyTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
+    Analizy analizy = new Analizy();
 
     @Test
     public void drop() throws IOException {
@@ -28,7 +28,7 @@ public class AnalizyTest {
             out.println("200 11:02:02");
 
         }
-        Analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
+        analizy.unavailable(source.getAbsolutePath(), target.getAbsolutePath());
         StringBuilder rsl = new StringBuilder();
         try (BufferedReader in = new BufferedReader(new FileReader(target))) {
             in.lines().forEach(rsl::append);
