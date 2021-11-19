@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,26 +13,24 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Invalid. need arguments");
-        }
-        for (String str : args) {
-            if (check(str)) {
-                throw new IllegalArgumentException("Exception");
-            }
-            String[] tmp = str.replaceFirst("-", "").split("=");
-            values.put(tmp[0], tmp[1]);
-        }
+        Arrays.stream(args)
+                .filter(this::check)
+                .filter(s -> s.contains("="))
+                .map(s -> s.split("="))
+                .forEach(str -> values.put(str[0].substring(1), str[1]));
     }
 
     private boolean check(String str) {
         if (!str.startsWith("-") || str.startsWith("-=") || str.contains("==") || !str.contains("=") || str.endsWith("=")) {
             throw new IllegalArgumentException("Invalid string");
         }
-        return false;
+        return true;
     }
 
     public static ArgsName of(String[] args) {
+        if (args.length == 0) {
+            throw new IllegalArgumentException("Do not have an arguments");
+        }
         ArgsName names = new ArgsName();
         names.parse(args);
         return names;
