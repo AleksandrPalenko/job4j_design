@@ -17,7 +17,7 @@ public class ArgsName {
                 .filter(this::check)
                 .filter(s -> s.contains("="))
                 .map(s -> s.split("="))
-                .forEach(str -> values.put(str[0].substring(1), str[1]));
+                .forEach(str -> values.put(str[0], str[1]));
     }
 
     private boolean check(String str) {
