@@ -9,15 +9,16 @@ public class Analizy {
     public void unavailable(String source, String target) {
         try (BufferedReader reader = new BufferedReader(new FileReader(source));
              PrintWriter writer = new PrintWriter(new FileOutputStream(target))) {
-            List<String> lines = reader.lines().collect(Collectors.toList());
             boolean status = false;
-            for (String line : lines) {
+            String line;
+            while (reader.ready()) {
+                line = reader.readLine();
                 if (!status && ("400".equals(line.split(" ")[0])
-                        || ("500".equals(line.split(" ")[0]) && !status))) {
+                        || ("500".equals(line.split(" ")[0])))) {
                     status = true;
                     writer.print(line.split(" ")[1] + ";");
                 } else if (status && ("200".equals(line.split(" ")[0])
-                        || ("300".equals(line.split(" ")[0]) && status))) {
+                        || ("300".equals(line.split(" ")[0])))) {
                     status = false;
                     writer.println(line.split(" ")[1]);
                 }
