@@ -15,9 +15,8 @@ public class ArgsName {
     private void parse(String[] args) {
         Arrays.stream(args)
                 .filter(this::check)
-                .filter(s -> s.contains("="))
                 .map(s -> s.split("="))
-                .forEach(str -> values.put(str[0].replaceFirst("-", ""), str[1]));
+                .forEach(str -> values.put(str[0].substring(1), str[1]));
     }
 
     private boolean check(String str) {
