@@ -18,5 +18,4 @@ public class DuplicatesFinder extends SimpleFileVisitor {
         duplicatesVisitor.getDuplicates().forEach(System.out::println);
     }
 
-
 }
