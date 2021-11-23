@@ -7,12 +7,18 @@ import java.util.stream.Collectors;
 
 public class Analizy {
     public void unavailable(String source, String target) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(source));
-             PrintWriter writer = new PrintWriter(new FileOutputStream(target))) {
-            boolean status = false;
-            String line;
+        List<String> list = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(source))) {
             while (reader.ready()) {
-                line = reader.readLine();
+                String line = reader.readLine();
+                list.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try (PrintWriter writer = new PrintWriter(new FileOutputStream(target))) {
+            boolean status = false;
+            for (String line : list) {
                 if (!status && ("400".equals(line.split(" ")[0])
                         || ("500".equals(line.split(" ")[0])))) {
                     status = true;
@@ -23,6 +29,7 @@ public class Analizy {
                     writer.println(line.split(" ")[1]);
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
