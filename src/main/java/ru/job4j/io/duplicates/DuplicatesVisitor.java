@@ -12,23 +12,28 @@ import java.util.List;
 import java.util.Map;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    private final Map<FileProperty, Path> files = new HashMap<>();
-    private final List<FileProperty> duplicates = new ArrayList<>();
+    private final Map<FileProperty, List<Path>> files = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        FileProperty fileProp = new FileProperty(attrs.size(), file.toFile().getName());
-        if (!files.containsKey(fileProp) && files.size() > 1) {
-            duplicates.add(fileProp);
+        FileProperty fileProp = new FileProperty(file.toFile().length(), file.toFile().getName());
+        if (!files.containsKey(fileProp)) {
+            List<Path> pathList = new ArrayList<>();
+            files.put(fileProp, pathList);
         } else {
-            files.put(fileProp, file);
+            List<Path> duplicates =  new ArrayList<>();
+            duplicates = files.get(fileProp);
+            duplicates.add(file.toAbsolutePath());
         }
-        System.out.println(file.toAbsolutePath());
         return FileVisitResult.CONTINUE;
     }
 
-    public List<FileProperty> getDuplicates() {
-        return duplicates;
+    public List<Path> getDuplicates() {
+        List<Path> pathDuplicates = new ArrayList<>();
+        files.values().stream()
+                .filter(s -> s.size() > 1)
+                .forEach(System.out::println);
+        return pathDuplicates;
     }
 
 }

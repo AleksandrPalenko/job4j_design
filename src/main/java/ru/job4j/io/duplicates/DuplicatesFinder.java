@@ -7,8 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.util.HashMap;
-import java.util.Map;
-
 
 public class DuplicatesFinder extends SimpleFileVisitor {
 
