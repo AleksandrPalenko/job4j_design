@@ -11,7 +11,7 @@ public class Zip {
 
     private final Map<String, String> values = new HashMap<>();
 
-    public static void packFiles(List<File> sources, File target) {
+    public static void packFiles(List<Path> sources, File target) {
         if (!target.isDirectory()) {
             throw new IllegalArgumentException("Invalid directory");
         }
@@ -19,9 +19,9 @@ public class Zip {
             throw new IllegalArgumentException("Invalid arguments");
         }
         try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            for (File str : sources) {
-                zip.putNextEntry(new ZipEntry(str.getName()));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(str))) {
+            for (Path str : sources) {
+                zip.putNextEntry(new ZipEntry(str.toFile().getName()));
+                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(str.toFile()))) {
                     zip.write(out.readAllBytes());
                 }
             }
@@ -30,30 +30,41 @@ public class Zip {
         }
     }
 
-    private void check(String str) {
-        if (!str.startsWith("-") || !str.startsWith("С:") || !str.contains("-e") || !str.contains("-o")) {
-            throw new IllegalArgumentException("Invalid string");
+    private void check(String[] strings) {
+        for (String string : strings) {
+            String[] str = string.split("=");
+            if (str.length != 2 || !str[0].startsWith("-") || str[0].isEmpty()) {
+                throw new IllegalArgumentException("Invalid string");
+            }
+            if (str[0].equals("-d")) {
+                File file = new File(str[1]);
+                if (!file.isDirectory() || !file.exists()) {
+                    throw new IllegalArgumentException("Archive directory does not exists");
+                }
+            }
         }
     }
 
     private void parse(String[] args) {
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Invalid arguments");
+        }
+        check(args);
         for (String arg : args) {
-            check(arg);
             String[] str = arg.split("=");
             values.put(str[0].substring(1), str[1]);
         }
+
     }
 
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
         zip.parse(args);
         ArgsName argsName = ArgsName.of(args);
+        File output = new File(argsName.get("o"));
         Path path = Path.of(argsName.get("d"));
         String st = argsName.get("e");
-        Search.search(path, p -> p.toFile().getName().equals(st));
-        packFiles(
-                Collections.singletonList(new File("./poms.xml")),
-                new File("./poms.zip")
-        );
+        List<Path> list = Search.search(path, p -> p.toFile().getName().equals(st));
+        packFiles(list, output);
     }
 }
