@@ -21,8 +21,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
             List<Path> pathList = new ArrayList<>();
             files.put(fileProp, pathList);
         } else {
-            List<Path> duplicates =  new ArrayList<>();
-            duplicates = files.get(fileProp);
+            List<Path> duplicates = files.get(fileProp);
             duplicates.add(file.toAbsolutePath());
         }
         return FileVisitResult.CONTINUE;
@@ -32,7 +31,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         List<Path> pathDuplicates = new ArrayList<>();
         files.values().stream()
                 .filter(s -> s.size() > 1)
-                .forEach(System.out::println);
+                .forEach(pathDuplicates::addAll);
         return pathDuplicates;
     }
 

@@ -15,5 +15,4 @@ public class DuplicatesFinder extends SimpleFileVisitor {
         Files.walkFileTree(Path.of("./"), new DuplicatesVisitor());
         duplicatesVisitor.getDuplicates().forEach(System.out::println);
     }
-
 }
