@@ -64,7 +64,7 @@ public class Zip {
         File output = new File(argsName.get("o"));
         Path path = Path.of(argsName.get("d"));
         String st = argsName.get("e");
-        List<Path> list = Search.search(path, p -> p.toFile().getName().equals(st));
+        List<Path> list = Search.search(path, p -> !p.toFile().getName().endsWith(st));
         packFiles(list, output);
     }
 }
