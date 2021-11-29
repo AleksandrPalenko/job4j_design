@@ -32,7 +32,7 @@ public class Zip {
         }
 
         for (String string : strings) {
-            StringCheck(string);
+            stringCheck(string);
             String[] str = string.split("=");
             values.put(strings[0].substring(1), strings[1]);
             if (str[0].startsWith("-d")) {
@@ -44,7 +44,7 @@ public class Zip {
         }
     }
 
-    private void StringCheck(String str) {
+    private void stringCheck(String str) {
         if (!str.startsWith("-") || str.startsWith("-=") || str.contains("==") || !str.contains("=") || str.endsWith("=")) {
             throw new IllegalArgumentException("Invalid string");
         }
