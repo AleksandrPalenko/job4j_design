@@ -27,19 +27,19 @@ public class ConsoleChat {
             String answersFromBot = null;
             boolean chatActive = true;
             readPhrases();
-            while (!textFromConsole.equals(OUT) && chatActive) {
+            while (!"закончить".equals(answersFromBot) && chatActive) {
                 bufferedWriter.write(textFromConsole);
-                if (textFromConsole.equals(STOP)) {
+                if ("стоп".equals(textFromConsole)) {
                     chatActive = false;
                 }
-                if (!textFromConsole.equals(STOP) && chatActive) {
+                if (!"стоп".equals(answersFromBot) && chatActive) {
                     if (!list.isEmpty()) {
                         answersFromBot = list.get(rand.nextInt(list.size() - 1));
                         bufferedWriter.write(answersFromBot);
                     }
                     System.out.println(answersFromBot);
                 }
-                    if (textFromConsole.equals(CONTINUE)) {
+                    if ("продолжить".equals(answersFromBot)) {
                         chatActive = true;
                     }
                     saveLog(list);
