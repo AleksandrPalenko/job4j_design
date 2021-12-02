@@ -20,30 +20,32 @@ public class ConsoleChat {
 
     public void run() {
         List<String> list = readPhrases();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+        List<String> dialog = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String textFromConsole = reader.readLine();
-            Random rand = new Random();
-            String answersFromBot = null;
+            int answersFromBot = (int) (Math.random() * list.size());
             boolean chatActive = true;
-            readPhrases();
-            while (!"закончить".equals(answersFromBot) && chatActive) {
-                bufferedWriter.write(textFromConsole);
-                if ("стоп".equals(textFromConsole)) {
+             while (!(OUT).equals(textFromConsole)) {
+                dialog.add(textFromConsole);
+                if (chatActive) {
+                    String answer = list.get(answersFromBot);
+                    System.out.println("Данные из файла " + answer);
+                    dialog.add(answer);
+                }
+                if ((STOP).equals(textFromConsole)) {
                     chatActive = false;
                 }
-                if (!"стоп".equals(answersFromBot) && chatActive) {
-                    if (!list.isEmpty()) {
-                        answersFromBot = list.get(rand.nextInt(list.size() - 1));
-                        bufferedWriter.write(answersFromBot);
-                    }
-                    System.out.println(answersFromBot);
+                if ((CONTINUE).equals(textFromConsole)) {
+                    chatActive = true;
                 }
-                    if ("продолжить".equals(answersFromBot)) {
-                        chatActive = true;
-                    }
-                    saveLog(list);
+                textFromConsole = reader.readLine();
+                if ((OUT).equals(textFromConsole)) {
+                    chatActive = false;
+                    dialog.add(textFromConsole);
+                }
             }
+            saveLog(dialog);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,8 +54,8 @@ public class ConsoleChat {
 
     private List<String> readPhrases() {
         List<String> rsl = new ArrayList<>();
-        try (BufferedReader in = new BufferedReader(new FileReader(botAnswers))) {
-           in.lines().forEach(rsl::add);
+        try (BufferedReader in = new BufferedReader(new FileReader(botAnswers, Charset.forName("WINDOWS-1251")))) {
+            in.lines().forEach(rsl::add);
         } catch (IOException q) {
             q.printStackTrace();
         }
@@ -72,7 +74,7 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("user.txt", "botAnswer.txt");
+        ConsoleChat cc = new ConsoleChat("dialog.txt", "botAnswer.txt");
         cc.run();
     }
 }
