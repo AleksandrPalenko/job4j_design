@@ -20,13 +20,10 @@ public class EchoServer {
                         }
                         if (str.contains("Exit")) {
                             out.write("Завершить работу сервера \r\n\r\n".getBytes());
+                            server.close();
                         }
                         if (str.contains("Any")) {
                             out.write("What \r\n\r\n".getBytes());
-                        }
-                        if (str.contains("Buy")) {
-                            server.close();
-                            out.write("HTTP/1.1 error\r\n\r\n".getBytes());
                         }
                     }
                     out.flush();
