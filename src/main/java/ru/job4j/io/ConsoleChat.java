@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 public class ConsoleChat {
+
     private final String path;
     private final String botAnswers;
     private static final String OUT = "закончить";
@@ -19,19 +20,13 @@ public class ConsoleChat {
     }
 
     public void run() {
-        List<String> list = readPhrases();
+        Random rand = new Random();
         List<String> dialog = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            String textFromConsole = reader.readLine();
-            int answersFromBot = (int) (Math.random() * list.size());
             boolean chatActive = true;
-             while (!(OUT).equals(textFromConsole)) {
+            String textFromConsole = reader.readLine();
+            while (!(OUT).equals(textFromConsole)) {
                 dialog.add(textFromConsole);
-                if (chatActive) {
-                    String answer = list.get(answersFromBot);
-                    System.out.println("Данные из файла " + answer);
-                    dialog.add(answer);
-                }
                 if ((STOP).equals(textFromConsole)) {
                     chatActive = false;
                 }
@@ -42,6 +37,12 @@ public class ConsoleChat {
                 if ((OUT).equals(textFromConsole)) {
                     chatActive = false;
                     dialog.add(textFromConsole);
+                }
+                if (chatActive) {
+                    String answer = readPhrases().get(rand.nextInt(readPhrases().size()));
+                    dialog.add(textFromConsole);
+                    dialog.add(answer);
+                    System.out.println("вывод " + answer);
                 }
             }
             saveLog(dialog);
