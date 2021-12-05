@@ -15,6 +15,15 @@ public class EchoServer {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
+                        if (str.contains("Hello")) {
+                            out.write("Hello \r\n\r\n".getBytes());
+                        }
+                        if (str.contains("Exit")) {
+                            out.write("Завершить работу сервера \r\n\r\n".getBytes());
+                        }
+                        if (str.contains("Any")) {
+                            out.write("What \r\n\r\n".getBytes());
+                        }
                         if (str.contains("Buy")) {
                             server.close();
                             out.write("HTTP/1.1 error\r\n\r\n".getBytes());
