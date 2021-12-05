@@ -8,10 +8,17 @@ public class UsageLog4j {
     private static final Logger LOG = LoggerFactory.getLogger(UsageLog4j.class.getName());
 
     public static void main(String[] args) {
-        LOG.trace("trace message");
-        LOG.debug("debug message");
-        LOG.info("info message");
-        LOG.warn("warn message");
-        LOG.error("error message");
+        int countRoom = 2;
+        char gender = 'M';
+        boolean isHealthy = false;
+        short height = 176;
+        long numberOfFloorsInTheHouse = (long) 45941315156498D;
+        float numberOfHair = 30000f;
+        byte age = 27;
+        double distanceToOfficeFrom = 25;
+        LOG.debug(
+                "Select -> int : {}, char : {}, boolean : {}, short : {}, long: {}, float : {}, byte : {}, double : {}",
+                countRoom, age, gender, isHealthy, height, numberOfFloorsInTheHouse, numberOfHair,
+                distanceToOfficeFrom);
     }
 }
