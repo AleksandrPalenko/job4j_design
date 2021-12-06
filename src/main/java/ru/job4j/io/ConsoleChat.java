@@ -24,21 +24,16 @@ public class ConsoleChat {
             List<String> dialog = new ArrayList<>();
             boolean chatActive = true;
             Random rand = new Random();
-            String textFromConsole = reader.readLine();
+            String textFromConsole = null;
             while (!(OUT).equals(textFromConsole)) {
+                textFromConsole = reader.readLine();
                 dialog.add(textFromConsole);
                 if ((STOP).equals(textFromConsole)) {
                     chatActive = false;
-                }
-                if ((CONTINUE).equals(textFromConsole)) {
+                } else if ((CONTINUE).equals(textFromConsole)) {
                     chatActive = true;
                 }
-                 textFromConsole = reader.readLine();
-                if ((OUT).equals(textFromConsole)) {
-                    chatActive = false;
-                    dialog.add(textFromConsole);
-                }
-                if (chatActive) {
+                if (chatActive && !(OUT).equals(textFromConsole)) {
                     String answer = readPhrases().get(rand.nextInt(readPhrases().size()));
                     dialog.add(answer);
                     System.out.println("вывод " + answer);
