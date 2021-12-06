@@ -20,10 +20,10 @@ public class ConsoleChat {
     }
 
     public void run() {
-        Random rand = new Random();
-        List<String> dialog = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            List<String> dialog = new ArrayList<>();
             boolean chatActive = true;
+            Random rand = new Random();
             String textFromConsole = reader.readLine();
             while (!(OUT).equals(textFromConsole)) {
                 dialog.add(textFromConsole);
@@ -33,14 +33,13 @@ public class ConsoleChat {
                 if ((CONTINUE).equals(textFromConsole)) {
                     chatActive = true;
                 }
-                textFromConsole = reader.readLine();
+                 textFromConsole = reader.readLine();
                 if ((OUT).equals(textFromConsole)) {
                     chatActive = false;
                     dialog.add(textFromConsole);
                 }
                 if (chatActive) {
                     String answer = readPhrases().get(rand.nextInt(readPhrases().size()));
-                    dialog.add(textFromConsole);
                     dialog.add(answer);
                     System.out.println("вывод " + answer);
                 }
