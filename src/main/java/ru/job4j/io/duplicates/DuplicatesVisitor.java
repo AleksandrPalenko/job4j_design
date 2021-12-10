@@ -1,4 +1,5 @@
 package ru.job4j.io.duplicates;
+
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
@@ -17,6 +18,7 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         FileProperty fileProp = new FileProperty(file.toFile().length(), file.toFile().getName());
         if (!files.containsKey(fileProp)) {
             List<Path> pathList = new ArrayList<>();
+            pathList.add(file.toAbsolutePath());
             files.put(fileProp, pathList);
         } else {
             List<Path> duplicates = files.get(fileProp);
