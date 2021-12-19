@@ -19,12 +19,12 @@ insert into emploers(departments_id,name) values(1, 'Petr');
 insert into emploers(departments_id,name) values(2, 'Sasha');
 insert into emploers(departments_id,name) values(3, 'Ivan');
 
-select * from departments d left join emploers e on d.id = e.departments_id;
-select * from departments d right join emploers e on d.id = e.departments_id;
+select e.name, d.name from departments d left join emploers e on d.id = e.departments_id;
+select e.name, d.name from emploers e right join departments d on e.departments_id=d.id;
 select * from departments d inner join emploers e on d.id = e.departments_id;
 select * from departments d cross join emploers e;
 
-select * from departments d left join emploers e on d.id = e.departments_id 
+select * from departments d left join emploers e on d.id = e.departments_id
 where departments_id is null;
 
 create table marriage (
@@ -41,16 +41,17 @@ insert into marriage (name,mariages) values ('Nastya','unisexual');
 create table teens(
 	id serial primary key,
 	name text,
-	gender varchar(155),
-	marriage_id int references marriage(id)
+	gender varchar(155)
 );
+
+drop table teens
 
 insert into teens(name, gender) values('Pavel', 'man');
 insert into teens(name, gender) values('Darya', 'woman');
 insert into teens(name, gender) values('Ivan', 'man');
 insert into teens(name, gender) values('Anna', 'woman');
 
-select t.name, m.name, m.mariages from teens t cross join marriage m 
+select * from teens t1 cross join teens t2 where t1.gender != t2.gender;
 
 
 
