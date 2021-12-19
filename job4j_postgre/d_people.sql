@@ -34,5 +34,7 @@ select max(price) from devices;
 
 select p.name as Имя, avg(d.price) as Цена 
 from devices as d join people as p on d.id = p.id
+join devices_people as dp on d.id = dp.device_id
+AND p.id = dp.people_id
 group by p.name
 having avg(d.price) > 5000;
