@@ -49,8 +49,8 @@ from product as p join type as t on p.type_id = t.id
 where t.name = 'МОЛОКО' OR t.name = 'СЫР';
 
 --7
-select p.name from product as p join type as t on p.type_id = t.id
-group by p.name
+select t.name from product as p join type as t on p.type_id = t.id
+group by t.name
 having count(*) < 10;
 
 --8
