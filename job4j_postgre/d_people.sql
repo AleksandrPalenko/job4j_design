@@ -32,9 +32,13 @@ select avg(price) from devices;
 select min(price) from devices;
 select max(price) from devices;
 
-select p.name as Имя, avg(d.price) as Цена 
-from devices as d join people as p on d.id = p.id
-join devices_people as dp on d.id = dp.device_id
-AND p.id = dp.people_id
+--4
+select p.name as Имя, avg(d.price) as Сред_Цена from devices_people dp join devices d on dp.device_id = d.id
+join people p on dp.people_id = p.id
+group by p.name
+
+--5
+select p.name as Имя, avg(d.price) as Цена from devices_people dp join devices d on dp.device_id = d.id
+join people p on dp.people_id = p.id
 group by p.name
 having avg(d.price) > 5000;
