@@ -60,9 +60,14 @@ insert into bank_processing(name, DB_id, Engenier_id, Support_id, transaction_id
 insert into bank_processing(name, DB_id, Engenier_id, Support_id, transaction_id) values('way4', 2, 1, 1, 4);
 insert into bank_processing(name, DB_id, Engenier_id, Support_id, transaction_id) values('way4', 2, 1, 1, 4);
 
-select DB.name as БД, count(DB.name), T.name as Транзакция from transaction t
+create view show_transaction_with_2_or_more_in_db
+as select DB.name as БД, count(DB.name), T.name as Транзакция from transaction t
 join bank_processing bp on t.id = bp.transaction_id
 join DB on bp.DB_id = DB.id
 join ADB on DB.ADB_id = ADB.id
 join support s on ADB.support_id = s.id
 group by (DB.name, T.name) having count(DB.name) >= 2;
+
+select * from show_transaction_with_2_or_more_in_db;
+
+alter view show_transaction_with_2_or_more_in_db rename to show_transactions_with_2_or_more_operaton_in_db;
