@@ -30,59 +30,43 @@ public class TableEditor implements AutoCloseable {
 
     public void createTable(String tableName) throws SQLException, ClassNotFoundException {
         initConnection();
-        config.load();
-        try (Connection connection = DriverManager.getConnection(url, login, password)) {
             try (Statement statement = connection.createStatement()) {
                 statement.executeUpdate(tableName);
             }
         }
-    }
 
     public void dropTable(String tableName) throws SQLException, ClassNotFoundException {
         initConnection();
-        config.load();
-        try (Connection connection = DriverManager.getConnection(url, login, password)) {
             try (Statement statement = connection.createStatement()) {
                 statement.executeUpdate(tableName);
             }
         }
-    }
 
     public void addColumn(String tableName, String columnName, String type) throws SQLException, ClassNotFoundException {
         initConnection();
-        config.load();
-        try (Connection connection = DriverManager.getConnection(url, login, password)) {
             try (Statement statement = connection.createStatement()) {
                 statement.executeUpdate(tableName);
                 statement.execute(columnName);
                 statement.executeQuery(type);
             }
         }
-    }
 
     public void dropColumn(String tableName, String columnName) throws SQLException, ClassNotFoundException {
         initConnection();
-        config.load();
-        try (Connection connection = DriverManager.getConnection(url, login, password)) {
             try (Statement statement = connection.createStatement()) {
                 statement.executeUpdate(tableName);
                 statement.execute(columnName);
             }
         }
-    }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws SQLException, ClassNotFoundException {
         initConnection();
-        config.load();
-        try (Connection connection = DriverManager.getConnection(url, login, password)) {
             try (Statement statement = connection.createStatement()) {
                 statement.executeUpdate(tableName);
                 statement.execute(columnName);
                 statement.execute(newColumnName);
             }
         }
-    }
-
 
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
         var rowSeparator = "-".repeat(30).concat(System.lineSeparator());
