@@ -48,40 +48,40 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void dropTable(String tableName) throws SQLException {
-            String sql = String.format(
-                    "drop table if not exists demo_table(%s, %s);",
-                    tableName
-            );
-            tableQuery(sql);
+        String sql = String.format(
+                "drop table if not exists demo_table(%s, %s);",
+                tableName
+        );
+        tableQuery(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type) throws SQLException {
-            String sql = String.format(
-                    "add column if not exists demo_table(%s, %s);",
-                    tableName,
-                    columnName,
-                    type
-            );
-            tableQuery(sql);
+        String sql = String.format(
+                "add column if not exists demo_table(%s, %s);",
+                tableName,
+                columnName,
+                type
+        );
+        tableQuery(sql);
     }
 
     public void dropColumn(String tableName, String columnName) throws SQLException, ClassNotFoundException {
-            String sql = String.format(
-                    "drop column if not exists demo_table(%s, %s);",
-                    tableName,
-                    columnName
-            );
-            tableQuery(sql);
+        String sql = String.format(
+                "drop column if not exists demo_table(%s, %s);",
+                tableName,
+                columnName
+        );
+        tableQuery(sql);
     }
 
     public void renameColumn(String tableName, String columnName, String newColumnName) throws SQLException, ClassNotFoundException {
-            String sql = String.format(
-                    "drop column if not exists demo_table(%s, %s);",
-                    tableName,
-                    columnName,
-                    newColumnName
-            );
-            tableQuery(sql);
+        String sql = String.format(
+                "drop column if not exists demo_table(%s, %s);",
+                tableName,
+                columnName,
+                newColumnName
+        );
+        tableQuery(sql);
     }
 
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
