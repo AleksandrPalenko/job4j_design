@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import java.util.stream.Collectors;
@@ -23,28 +24,12 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-        /*      for (String line = rd.readLine(); line != null; line = rd.readLine()) {
-              String[] string = line.split(";");
-              if (string.length != 2) {
-                  throw new IllegalArgumentException("Invalid agruments");
-              }
-
-         */
-            rd.lines().map(a -> a.split(";"))
-                    .filter(a -> {
-                        String line = null;
-                        try {
-                            line = rd.readLine();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        String[] string = line.split(";");
-                        if (string.length != 2) {
-                            throw new IllegalArgumentException("Invalid agruments");
-                        }
-                        return true;
-                    }).
-                    map(str -> new User(str[0], str[1])).collect(Collectors.toList());
+            rd.lines().forEach(line -> {
+                String[] str = line.split(";");
+                if ((str.length != 2) && (!str[0].isEmpty() || !str[1].isEmpty())) {
+                    throw new IllegalArgumentException("Invalid agruments");
+                } else Arrays.stream(str).collect(Collectors.toList());
+            });
         }
         return users;
     }
@@ -59,7 +44,7 @@ public class ImportDB {
         )) {
             for (User user : users) {
                 try (PreparedStatement ps = cnt.
-                        prepareStatement("insert into users %s, name %s, email %s;")) {
+                        prepareStatement("insert into cities(name, email) values (?, ?)")) {
                     ps.setString(1, user.name);
                     ps.setString(2, user.email);
                     ps.execute();
@@ -81,10 +66,10 @@ public class ImportDB {
 
     public static void main(String[] args) throws Exception {
         Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream("./app_spammer.properties")) {
+        try (FileInputStream in = new FileInputStream("./src/main/resources/app_spammer.properties")) {
             cfg.load(in);
         }
-        ImportDB db = new ImportDB(cfg, "./dump.txt");
+        ImportDB db = new ImportDB(cfg, "./src/main/resources/dump.txt");
         db.save(db.load());
     }
 }
