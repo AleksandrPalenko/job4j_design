@@ -28,7 +28,9 @@ public class ImportDB {
                 String[] str = line.split(";");
                 if ((str.length != 2) && (!str[0].isEmpty() || !str[1].isEmpty())) {
                     throw new IllegalArgumentException("Invalid agruments");
-                } else Arrays.stream(str).collect(Collectors.toList());
+                } else {
+                    Arrays.stream(str).collect(Collectors.toList());
+                }
             });
         }
         return users;
