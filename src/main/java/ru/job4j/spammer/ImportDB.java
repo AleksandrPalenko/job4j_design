@@ -6,10 +6,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 public class ImportDB {
 
@@ -26,10 +24,10 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> {
                 String[] str = line.split(";");
-                if ((str.length != 2) && (!str[0].isEmpty() || !str[1].isEmpty())) {
+                if (str.length != 2 || !str[0].isEmpty() || !str[1].isEmpty()) {
                     throw new IllegalArgumentException("Invalid agruments");
                 } else {
-                    Arrays.stream(str).collect(Collectors.toList());
+                    users.add(new User(str[0], str[1]));
                 }
             });
         }
@@ -63,15 +61,14 @@ public class ImportDB {
             this.name = name;
             this.email = email;
         }
-    }
 
-
-    public static void main(String[] args) throws Exception {
-        Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream("./src/main/resources/app_spammer.properties")) {
-            cfg.load(in);
+        public static void main(String[] args) throws Exception {
+            Properties cfg = new Properties();
+            try (FileInputStream in = new FileInputStream("./src/main/resources/app_spammer.properties")) {
+                cfg.load(in);
+            }
+            ImportDB db = new ImportDB(cfg, "./src/main/resources/dump.txt");
+            db.save(db.load());
         }
-        ImportDB db = new ImportDB(cfg, "./src/main/resources/dump.txt");
-        db.save(db.load());
     }
 }
