@@ -23,10 +23,32 @@ public class ImportDB {
     public List<User> load() throws IOException {
         List<User> users = new ArrayList<>();
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
-            rd.lines().map(a -> a.split(";")).map(str -> new User(str[0], str[1])).collect(Collectors.toList());
+        /*      for (String line = rd.readLine(); line != null; line = rd.readLine()) {
+              String[] string = line.split(";");
+              if (string.length != 2) {
+                  throw new IllegalArgumentException("Invalid agruments");
+              }
+
+         */
+            rd.lines().map(a -> a.split(";"))
+                    .filter(a -> {
+                        String line = null;
+                        try {
+                            line = rd.readLine();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        String[] string = line.split(";");
+                        if (string.length != 2) {
+                            throw new IllegalArgumentException("Invalid agruments");
+                        }
+                        return true;
+                    }).
+                    map(str -> new User(str[0], str[1])).collect(Collectors.toList());
         }
         return users;
     }
+
 
     public void save(List<User> users) throws ClassNotFoundException, SQLException {
         Class.forName(cfg.getProperty("jdbc.driver"));
@@ -36,7 +58,8 @@ public class ImportDB {
                 cfg.getProperty("jdbc.password")
         )) {
             for (User user : users) {
-                try (PreparedStatement ps = cnt.prepareStatement("insert into users ...")) {
+                try (PreparedStatement ps = cnt.
+                        prepareStatement("insert into users %s, name %s, email %s;")) {
                     ps.setString(1, user.name);
                     ps.setString(2, user.email);
                     ps.execute();
@@ -58,7 +81,7 @@ public class ImportDB {
 
     public static void main(String[] args) throws Exception {
         Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream("./app.properties")) {
+        try (FileInputStream in = new FileInputStream("./app_spammer.properties")) {
             cfg.load(in);
         }
         ImportDB db = new ImportDB(cfg, "./dump.txt");
