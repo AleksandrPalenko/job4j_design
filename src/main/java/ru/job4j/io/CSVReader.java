@@ -11,10 +11,15 @@ public class CSVReader {
         if (args.length != 4) {
             throw new IllegalArgumentException("Invalid parameters");
         }
-        if (args[0].startsWith("-path")) {
-            File file = new File(args[1]);
+        ArgsName argsName = ArgsName.of(args);
+        for (String str : args) {
+            argsName.get(str);
+            File file = new File(argsName.get("path"));
             if (!file.isDirectory() || !file.exists()) {
                 throw new IllegalArgumentException("File does not exists");
+            } else if (str == null) {
+                throw new IllegalArgumentException(
+                        String.format("The parameter %s is not found", str));
             }
         }
     }
@@ -27,7 +32,7 @@ public class CSVReader {
         List<String> list = new ArrayList<>();
         String delimiter = argsName.get("delimiter");
         String out = argsName.get("out");
-        String path =  argsName.get("path");
+        String path = argsName.get("path");
         String filter = argsName.get("filter");
         var scanner = new Scanner(new BufferedReader(new FileReader(argsName.get(path))));
         if (scanner.hasNext()) {
