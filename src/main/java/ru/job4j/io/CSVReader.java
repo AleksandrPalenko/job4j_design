@@ -70,10 +70,10 @@ public class CSVReader {
         }
     }
 
-    public void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         CSVReader csvReader = new CSVReader();
         csvReader.valid(args);
         ArgsName argsName = ArgsName.of(args);
-        handle(argsName);
+        csvReader.handle(argsName);
     }
 }
