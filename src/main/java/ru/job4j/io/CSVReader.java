@@ -28,7 +28,7 @@ public class CSVReader {
 -path=file.csv -delimiter=";"  -out=stdout -filter=name,age
  */
 
-    public static void handle(ArgsName argsName) throws Exception {
+    public void handle(ArgsName argsName) throws Exception {
         List<Integer> filterVal = new ArrayList<>();
         List<String> list = new ArrayList<>();
         String delimiter = argsName.get("delimiter");

@@ -14,6 +14,8 @@ public class CSVReaderTest {
 
     @Test
     public void whenFilterTwoColumns() throws Exception {
+        CSVReader sc = new CSVReader();
+        ArgsName argsName = new ArgsName();
         String data = String.join(
                 System.lineSeparator(),
                 "name;age;last_name;education",
@@ -23,7 +25,7 @@ public class CSVReaderTest {
         );
         File file = temporaryFolder.newFile("source.csv");
         File target = temporaryFolder.newFile("target.csv");
-        ArgsName argsName = ArgsName.of(new String[]{
+        argsName = ArgsName.of(new String[]{
                 "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=name,age"
         });
         Files.writeString(file.toPath(), data);
@@ -34,7 +36,7 @@ public class CSVReaderTest {
                 "Jack;25",
                 "William;30"
         ).concat(System.lineSeparator());
-        CSVReader.handle(argsName);
+        sc.handle(argsName);
         Assert.assertEquals(expected, Files.readString(target.toPath()));
     }
 
