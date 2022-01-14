@@ -13,7 +13,7 @@ public class CSVReader {
         }
         ArgsName argsName = ArgsName.of(args);
         File file = new File(argsName.get("path"));
-        if (!file.isDirectory() || !file.exists()) {
+        if (!file.exists()) {
             throw new IllegalArgumentException("File does not exists");
         }
         for (String str : args) {
@@ -59,22 +59,18 @@ public class CSVReader {
             if ("stdout".equals(out)) {
                 list.forEach(System.out::println);
             } else {
-                saveResult(list, out);
+                try (PrintWriter outs = new PrintWriter(
+                        new BufferedOutputStream(
+                                new FileOutputStream(out)))) {
+                    list.forEach(outs::println);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
 
-    public static void saveResult(List<String> log, String file) throws Exception {
-        try (PrintWriter out = new PrintWriter(
-                new BufferedOutputStream(
-                        new FileOutputStream(file)))) {
-            log.forEach(out::println);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) throws Exception {
+    public void main(String[] args) throws Exception {
         CSVReader csvReader = new CSVReader();
         csvReader.valid(args);
         ArgsName argsName = ArgsName.of(args);
