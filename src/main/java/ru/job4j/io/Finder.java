@@ -1,8 +1,11 @@
 package ru.job4j.io;
 
+import ru.job4j.serialization.json.A;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -39,27 +42,25 @@ public class Finder {
         }
     }
 
-    public static void searchList(ArgsName argsName) throws IOException {
+    public static void searchList(ArgsName argsName, File target) throws IOException {
         String typeFinder = argsName.get("t");
         List<Path> list = new ArrayList<>();
+        List<List<Path>> log =  new ArrayList<>();
         Pattern pattern = Pattern.compile((argsName.get("n")));
         if ("mask".equals(typeFinder)) {
-            list = Search.search(Path.of(argsName.get("d")), p -> p.toFile().getName().endsWith(argsName.get("n")));
+            list = Search.search(Paths.get(argsName.get("d")), p -> p.toFile().getName().endsWith(argsName.get("n")));
         }
         if ("name".equals(typeFinder)) {
-            list = Search.search(Path.of(argsName.get("d")), p -> p.toFile().getName().endsWith(argsName.get("n")));
+            list = Search.search(Paths.get(argsName.get("d")), p -> p.toFile().getName().endsWith(argsName.get("n")));
         }
         if ("regex".equals(typeFinder)) {
-            list = Search.search(Path.of(argsName.get("d")), p -> pattern.matcher(p.toFile().getName()).find());
+            list = Search.search(Paths.get(argsName.get("d")), p -> pattern.matcher(p.toFile().getName()).find());
         }
-        saveLog(list);
-    }
-
-    private static void saveLog(List<Path> log) {
-        if (log.isEmpty()) {
-            throw new IllegalArgumentException("Invalid log");
-        }
-        try (PrintWriter out = new PrintWriter(new FileWriter(argsName.get("o"), Charset.forName("WINDOWS-1251"), true))) {
+        log.add(list);
+        try (PrintWriter out = new PrintWriter(new FileWriter(target, Charset.forName("WINDOWS-1251"), true))) {
+            for (Path str:list) {
+                out.write(String.valueOf(str));
+            }
             log.forEach(out::println);
         } catch (IOException a) {
             a.printStackTrace();
@@ -70,6 +71,7 @@ public class Finder {
         Finder finder = new Finder();
         finder.valid(args);
         ArgsName argsName = ArgsName.of(args);
-        searchList(argsName);
+        File output = new File(argsName.get("o"));
+        searchList(argsName, output);
     }
 }
