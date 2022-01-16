@@ -22,16 +22,16 @@ import java.util.regex.Pattern;
 -o - результат записать в файл.
  */
 public class Finder {
-    private static ArgsName argsName;
 
     private void valid(String[] args) {
         if (args.length != 4) {
             throw new IllegalArgumentException("invalid arguments");
         }
-        ArgsName.of(args);
+        ArgsName argsName = ArgsName.of(args);
         File file = new File(argsName.get("d"));
         if (!file.isDirectory()) {
-            throw new IllegalArgumentException("directory does not exists");
+            throw new IllegalArgumentException(String.format("Not exist %s", file.getAbsoluteFile()));
+
         }
         for (String str : args) {
             argsName.get(str);
@@ -48,10 +48,11 @@ public class Finder {
         List<List<Path>> log =  new ArrayList<>();
         Pattern pattern = Pattern.compile((argsName.get("n")));
         if ("mask".equals(typeFinder)) {
-            list = Search.search(Paths.get(argsName.get("d")), p -> p.toFile().getName().endsWith(argsName.get("n")));
+            list = Search.search(Paths.get(argsName.get("d")),
+                    p -> p.toFile().getName().endsWith(argsName.get("n").replace("*", "")));
         }
         if ("name".equals(typeFinder)) {
-            list = Search.search(Paths.get(argsName.get("d")), p -> p.toFile().getName().endsWith(argsName.get("n")));
+            list = Search.search(Paths.get(argsName.get("d")), p -> p.toFile().getName().equals(argsName.get("n")));
         }
         if ("regex".equals(typeFinder)) {
             list = Search.search(Paths.get(argsName.get("d")), p -> pattern.matcher(p.toFile().getName()).find());
