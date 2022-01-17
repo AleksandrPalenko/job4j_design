@@ -1,6 +1,5 @@
 package ru.job4j.io;
 
-import ru.job4j.serialization.json.A;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -45,8 +44,7 @@ public class Finder {
     public static void searchList(ArgsName argsName, File target) throws IOException {
         String typeFinder = argsName.get("t");
         List<Path> list = new ArrayList<>();
-        List<List<Path>> log =  new ArrayList<>();
-        Pattern pattern = Pattern.compile((argsName.get("n")));
+        List<List> log =  new ArrayList<>();
         if ("mask".equals(typeFinder)) {
             list = Search.search(Paths.get(argsName.get("d")),
                     p -> p.toFile().getName().endsWith(argsName.get("n").replace("*", "")));
@@ -55,7 +53,8 @@ public class Finder {
             list = Search.search(Paths.get(argsName.get("d")), p -> p.toFile().getName().equals(argsName.get("n")));
         }
         if ("regex".equals(typeFinder)) {
-            list = Search.search(Paths.get(argsName.get("d")), p -> pattern.matcher(p.toFile().getName()).find());
+            list = Search.search(Paths.get(argsName.get("d")),
+                    p -> Pattern.compile((argsName.get("n"))).matcher(p.toFile().getName()).find());
         }
         log.add(list);
         try (PrintWriter out = new PrintWriter(new FileWriter(target, Charset.forName("WINDOWS-1251"), true))) {
