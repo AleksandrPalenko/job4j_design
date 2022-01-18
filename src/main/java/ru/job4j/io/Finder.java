@@ -41,10 +41,10 @@ public class Finder {
         }
     }
 
-    public static void searchList(ArgsName argsName, File target) throws IOException {
+    public void searchList(ArgsName argsName, File target) throws IOException {
         String typeFinder = argsName.get("t");
         List<Path> list = new ArrayList<>();
-        List<List> log =  new ArrayList<>();
+        List<List> log = new ArrayList<>();
         if ("mask".equals(typeFinder)) {
             list = Search.search(Paths.get(argsName.get("d")),
                     p -> p.toFile().getName().endsWith(argsName.get("n").replace("*", "")));
@@ -58,8 +58,9 @@ public class Finder {
         }
         log.add(list);
         try (PrintWriter out = new PrintWriter(new FileWriter(target, Charset.forName("WINDOWS-1251"), true))) {
-            for (Path str:list) {
-                out.write(String.valueOf(str));
+            for (Path str : list) {
+                String lineSeparator = System.getProperty("line.separator");
+                out.write(str + lineSeparator);
             }
             log.forEach(out::println);
         } catch (IOException a) {
@@ -72,6 +73,6 @@ public class Finder {
         finder.valid(args);
         ArgsName argsName = ArgsName.of(args);
         File output = new File(argsName.get("o"));
-        searchList(argsName, output);
+        finder.searchList(argsName, output);
     }
 }
