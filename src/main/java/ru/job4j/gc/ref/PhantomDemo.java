@@ -57,5 +57,4 @@ public class PhantomDemo {
         TimeUnit.SECONDS.sleep(3);
         storage.utilizeResource();
     }
-
 }
