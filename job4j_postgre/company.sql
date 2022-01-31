@@ -44,10 +44,10 @@ select c.name as name_c, COUNT(p.name) as kolvo
 from company c join person p 
 on c.id = p.company_id
 group by c.name	
-order by count(p.company_id) = (select count(p.company_id)
+having count(p.name) = (select count(p.company_id)
 from person p 
 group by p.company_id 
-order by count(p.company_id) desc limit 1)
+order by count(p.company_id) desc limit 1);
 
 
 
