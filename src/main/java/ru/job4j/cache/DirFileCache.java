@@ -1,10 +1,10 @@
 package ru.job4j.cache;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.ref.SoftReference;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.StringJoiner;
 
 public class DirFileCache extends AbstractCache<String, String> {
@@ -23,17 +23,13 @@ public class DirFileCache extends AbstractCache<String, String> {
      */
     @Override
     protected String load(String key) {
-        StringBuilder str =  new StringBuilder();
-        SoftReference<StringBuilder> softStr = new SoftReference<>(str);
-        String line = null;
-        try (BufferedReader in = new BufferedReader(new FileReader(key))) {
-            while ((line = in.readLine()) != null) {
-                line.lines().forEach(str::append);
-            }
+        String str = null;
+        try {
+            str = Files.readString(Path.of(cachingDir, key));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return softStr.toString();
+        return str;
     }
 
 }
