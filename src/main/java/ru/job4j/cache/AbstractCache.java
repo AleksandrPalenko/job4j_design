@@ -3,7 +3,6 @@ package ru.job4j.cache;
 import java.lang.ref.SoftReference;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 public abstract class AbstractCache<K, V> {
 
@@ -16,9 +15,9 @@ public abstract class AbstractCache<K, V> {
     public V get(K key) {
         V value = cache.getOrDefault(key, new SoftReference<>(null)).get();
         if (value == null) {
-            load(key);
+            value = load(key);
         }
-        return cache.get(key).get();
+        return value;
     }
 
     protected abstract V load(K key);

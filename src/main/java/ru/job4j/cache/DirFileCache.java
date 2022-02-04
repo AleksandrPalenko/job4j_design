@@ -1,11 +1,8 @@
 package ru.job4j.cache;
 
 import java.io.*;
-import java.lang.ref.SoftReference;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.StringJoiner;
 
 public class DirFileCache extends AbstractCache<String, String> {
 /*
