@@ -19,8 +19,8 @@ public class GeneratorTest {
     public void whenGenerate() {
         User user = new User();
         Map<String, String> generate = new HashMap<>();
-        generate.put("name", "subject");
-        generate.put("Petr Arsentev", "you");
+        generate.put("name", "Petr Arsentev");
+        generate.put("subject", "you");
         String expected = "I am a Petr Arsentev, Who are you? ";
         String rsl = user.produce("I am a ${name}, Who are ${subject}? ", generate);
         assertEquals(rsl, expected);
@@ -31,8 +31,8 @@ public class GeneratorTest {
     public void whenGenerateIncorrectResultWithKey() {
         User user = new User();
         Map<String, String> generate = new HashMap<>();
-        generate.put("userName", "subject");
-        generate.put("Petr Arsentev", "you");
+        generate.put("name", "Petr Arsentevsk");
+        generate.put("subject", "you");
         String expected = "I am a Petr Arsentev, Who are you? ";
         String rsl = user.produce("I am a ${name}, Who are ${subject}? ", generate);
         assertEquals(rsl, expected);
@@ -43,8 +43,8 @@ public class GeneratorTest {
     public void whenGenerateIncorrectResultWithValue() {
         User user = new User();
         Map<String, String> generate = new HashMap<>();
-        generate.put("name", "anySubject");
-        generate.put("Petr Arsentev", "you");
+        generate.put("name", "Petr Arsentev");
+        generate.put("subject", "us");
         String expected = "I am a Petr Arsentev, Who are you? ";
         String rsl = user.produce("I am a ${name}, Who are ${subject}? ", generate);
         assertEquals(rsl, expected);
@@ -55,10 +55,7 @@ public class GeneratorTest {
     public void whenGenerateIncorrectWithAmountValue() {
         User user = new User();
         Map<String, String> generate = new HashMap<>();
-        generate.put("name", "subject");
-        generate.put("Petr Arsentev", "you");
-        generate.put("Petr", "you");
-        generate.put("Arsentev", "you");
+        generate.put("name", "Petr Arsentev");
         String expected = "I am a Petr Arsentev, Who are you? ";
         String rsl = user.produce("I am a ${name}, Who are ${subject}? ", generate);
         assertEquals(rsl, expected);
