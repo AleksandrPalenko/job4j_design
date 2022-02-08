@@ -17,11 +17,11 @@ public class ReportDeveloperTest {
         store.add(worker);
         Report engine = new ReportEngine(store);
         StringBuilder expect = new StringBuilder()
-                .append(" <html> " +
-                        "<head> " +
-                        "<title>Name; Hired; Fired; Salary;</title> " +
-                        "</head> " +
-                        "<body> ")
+                .append(" <html> "
+                        + "<head> "
+                        + "<title>Name; Hired; Fired; Salary;</title> "
+                        + "</head> "
+                        + "<body> ")
                 .append(System.lineSeparator())
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")

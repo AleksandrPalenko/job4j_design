@@ -12,11 +12,11 @@ public class ReportDeveloper implements Report {
     @Override
     public String generate(Predicate<Employee> filter) {
         StringBuilder text = new StringBuilder();
-        text.append(" <html> " +
-                "<head> " +
-                "<title>Name; Hired; Fired; Salary;</title> " +
-                "</head> " +
-                "<body> ");
+        text.append(" <html> "
+                + "<head> "
+                + "<title>Name; Hired; Fired; Salary;</title> "
+                + "</head> "
+                + "<body> ");
         for (Employee employee : store.findBy(filter)) {
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
