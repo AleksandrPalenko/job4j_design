@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.GregorianCalendar;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -13,8 +14,8 @@ public class ReportHRTest {
     @Test
     public void whenOldGeneratedHR() {
         MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
+        Calendar cal = new GregorianCalendar(2017, Calendar.FEBRUARY , 25);
+        Employee worker = new Employee("Ivan", cal, cal, 100);
         store.add(worker);
         Report engine = new ReportEngine(store);
         StringBuilder expect = new StringBuilder()

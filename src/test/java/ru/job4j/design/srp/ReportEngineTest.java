@@ -2,15 +2,18 @@ package ru.job4j.design.srp;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
+
 import org.junit.Test;
+
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class ReportEngineTest {
 
     @Test
     public void whenOldGenerated() {
         MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
+        Calendar now = new GregorianCalendar(2022, Calendar.FEBRUARY, 11);
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
         Report engine = new ReportEngine(store);

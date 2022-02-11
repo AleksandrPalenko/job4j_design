@@ -6,6 +6,8 @@ public class ReportAccountant implements Report {
 
     private Store store;
 
+    public static final double RATE = 0.073;
+
     public ReportAccountant(Store store) {
         this.store = store;
     }
@@ -18,7 +20,7 @@ public class ReportAccountant implements Report {
             text.append(employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
-                    .append(employee.getSalary() * 0.073).append(";")
+                    .append(employee.getSalary() * RATE).append(";")
                     .append(System.lineSeparator());
         }
         return text.toString();
