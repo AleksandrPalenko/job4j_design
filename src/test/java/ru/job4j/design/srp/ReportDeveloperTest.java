@@ -13,22 +13,24 @@ public class ReportDeveloperTest {
     @Test
     public void whenOldGenerated() {
         MemStore store = new MemStore();
-        Calendar now = new GregorianCalendar(2017, Calendar.FEBRUARY , 25);
+        Calendar now = new GregorianCalendar(2017, Calendar.FEBRUARY, 25);
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
-        Report engine = new ReportEngine(store);
+        ReportDeveloper engine = new ReportDeveloper(store);
         StringBuilder expect = new StringBuilder()
-                .append(" <html> "
+                .append("<table>"
+                        + " <html> "
                         + "<head> "
                         + "<title>Name; Hired; Fired; Salary;</title> "
                         + "</head> "
                         + "<body> ")
                 .append(System.lineSeparator())
-                .append(worker.getName()).append(";")
-                .append(worker.getHired()).append(";")
-                .append(worker.getFired()).append(";")
-                .append(worker.getSalary()).append(";")
-                .append(System.lineSeparator());
+                .append(worker.getName()).append("</td><td>")
+                .append(worker.getHired()).append("</td><td>")
+                .append(worker.getFired()).append("</td><td>")
+                .append(worker.getSalary()).append("</td><td>")
+                .append(System.lineSeparator())
+                .append("</table>");
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 
