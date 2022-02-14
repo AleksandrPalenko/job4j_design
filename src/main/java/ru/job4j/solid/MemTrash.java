@@ -3,9 +3,10 @@ package ru.job4j.solid;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class MemTrash implements ControllQuality {
+public class MemTrash implements Storage {
+
     @Override
-    public List<Food> processBy(Predicate<Food> filter) {
-        return null;
+    public boolean add(Food food, List<Food> list) {
+        return false;
     }
 }

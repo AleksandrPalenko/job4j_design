@@ -5,13 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
-public class MemShop implements ControllQuality {
-
-    private final List<Food> foods = new ArrayList<>();
+public class MemShop implements Storage {
 
     @Override
-    public List<Food> processBy(Predicate<Food> filter) {
-        return null;
+    public boolean add(Food food, List<Food> list) {
+        return false;
     }
-
 }
