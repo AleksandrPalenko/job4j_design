@@ -1,14 +1,23 @@
 package ru.job4j.design.srp;
 
-import com.google.gson.GsonBuilder;
+import java.util.List;
 
-import java.util.function.Predicate;
 
-public class User implements Report {
+public class Users {
 
-    private Store store;
+    List<Users> users;
+
     private String name;
+
     private String lastName;
+
+    public List<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Users> users) {
+        this.users = users;
+    }
 
     public String getName() {
         return name;
@@ -24,12 +33,5 @@ public class User implements Report {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    @Override
-    public String generate(Predicate<Employee> filter) {
-        var users = store.findBy(filter);
-        var lib = new GsonBuilder().create();
-        return lib.toJson(users);
     }
 }
