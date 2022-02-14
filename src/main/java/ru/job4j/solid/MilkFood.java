@@ -1,4 +1,4 @@
-package ru.job4j.solidMem;
+package ru.job4j.solid;
 
 import java.util.Date;
 
