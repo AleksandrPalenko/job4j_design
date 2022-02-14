@@ -31,4 +31,5 @@ public class ReportXmlTest {
                 .append("\n</employees>");
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
+
 }
