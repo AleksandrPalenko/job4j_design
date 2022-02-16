@@ -13,5 +13,5 @@ public interface Storage {
         return (int) Math.abs((dayBeforeExpired.toDays() / shelfLife.toDays()) * 100);
     }
 
-    boolean accept(Food food); //проверяет может ли хранилище принять продукт.В реализации каждого хранилища будет своя проверка согласно заданию.
+    boolean accept(Food food);
 }
