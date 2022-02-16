@@ -1,16 +1,17 @@
 package ru.job4j.solid;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAmount;
 import java.util.Objects;
 
 public class Food {
     private String name;
-    private Date expiryDate;
-    private Date createDate;
+    private LocalDate expiryDate;
+    private LocalDate createDate;
     private int price;
     private double discount;
 
-    public Food(String name, Date expiryDate, Date createDate, int price, double discount) {
+    public Food(String name, LocalDate expiryDate, LocalDate createDate, int price, double discount) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
@@ -26,19 +27,19 @@ public class Food {
         this.name = name;
     }
 
-    public Date getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
+    public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
 
-    public Date getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
     }
 
