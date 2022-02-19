@@ -25,4 +25,9 @@ public class MemWarehouse implements Storage {
         }
         return rsl;
     }
+
+    @Override
+    public List<Food> storeFood() {
+        return List.copyOf(list);
+    }
 }

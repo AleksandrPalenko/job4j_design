@@ -12,7 +12,9 @@ public class ControlQuality {
 
     public void sorted(Food food) {
         for (Storage store : storage) {
-            store.add(food);
+            if (store.accept(food)) {
+                store.add(food);
+            }
         }
     }
 }

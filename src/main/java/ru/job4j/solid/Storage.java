@@ -2,6 +2,7 @@ package ru.job4j.solid;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.List;
 
 public interface Storage {
     boolean add(Food food);
@@ -14,4 +15,6 @@ public interface Storage {
     }
 
     boolean accept(Food food);
+
+    List<Food> storeFood();
 }
