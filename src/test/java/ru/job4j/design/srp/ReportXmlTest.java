@@ -3,6 +3,7 @@ package ru.job4j.design.srp;
 import org.junit.Test;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
 import static org.hamcrest.Matchers.is;
@@ -13,9 +14,9 @@ public class ReportXmlTest {
     @Test
     public void whenXMLGenerated() {
         MemStore store = new MemStore();
-        Calendar now = Calendar.getInstance();
-        OffsetDateTime date = OffsetDateTime.ofInstant(now.toInstant(), now.getTimeZone().toZoneId());
-        Employee worker = new Employee("Ivan", now, now, 100);
+        Calendar date = new GregorianCalendar(2022, Calendar.FEBRUARY, 1);
+        date.setTimeZone(TimeZone.getTimeZone(ZoneOffset.of("+3")));
+        Employee worker = new Employee("Ivan", date, date, 100);
         store.add(worker);
         ReportXml engine = new ReportXml(store);
         StringBuilder expect = new StringBuilder()
@@ -23,10 +24,8 @@ public class ReportXmlTest {
                 .append("<employees>\n")
                 .append("    <employees ")
                 .append("name=\"").append(worker.getName()).append("\"")
-                .append(" hired=\"")
-                .append(date).append("\"")
-                .append(" fired=\"")
-                .append(date).append("\"")
+                .append(" hired=\"2022-02-01T00:00:00+03:00\"")
+                .append(" fired=\"2022-02-01T00:00:00+03:00\"")
                 .append(" salary=\"")
                 .append(worker.getSalary()).append("\"/>").append("\n")
                 .append("</employees>\n");
