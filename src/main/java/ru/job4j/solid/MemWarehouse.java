@@ -19,11 +19,7 @@ public class MemWarehouse implements Storage {
 
     @Override
     public boolean accept(Food food) {
-        boolean rsl = false;
-        if (getPercent(food) < 25) {
-            rsl = list.add(food);
-        }
-        return rsl;
+        return getPercent(food) < 25;
     }
 
     @Override

@@ -19,11 +19,7 @@ public class MemTrash implements Storage {
 
     @Override
     public boolean accept(Food food) {
-        boolean rsl = false;
-        if (getPercent(food) >= 100) {
-            rsl = list.add(food);
-        }
-        return rsl;
+        return getPercent(food) >= 100;
     }
 
     @Override
