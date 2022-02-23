@@ -1,10 +1,10 @@
-package ru.job4j.solid;
+package ru.job4j.solid.lsp;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemShop implements Storage {
+public class MemTrash implements Storage {
 
     private List<Food> list = new ArrayList<>();
 
@@ -12,9 +12,6 @@ public class MemShop implements Storage {
     public boolean add(Food food) {
         boolean rsl = accept(food);
         if (rsl) {
-            if (getPercent(food) >= 75) {
-                food.setPrice((int) (food.getPrice() - (food.getPrice() * food.getDiscount())));
-            }
             list.add(food);
         }
         return rsl;
@@ -22,7 +19,7 @@ public class MemShop implements Storage {
 
     @Override
     public boolean accept(Food food) {
-        return getPercent(food) >= 25 && getPercent(food) < 100;
+        return getPercent(food) >= 100;
     }
 
     @Override

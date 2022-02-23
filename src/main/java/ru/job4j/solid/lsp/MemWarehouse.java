@@ -1,10 +1,10 @@
-package ru.job4j.solid;
+package ru.job4j.solid.lsp;
 
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MemTrash implements Storage {
+public class MemWarehouse implements Storage {
 
     private List<Food> list = new ArrayList<>();
 
@@ -19,7 +19,7 @@ public class MemTrash implements Storage {
 
     @Override
     public boolean accept(Food food) {
-        return getPercent(food) >= 100;
+        return getPercent(food) < 25;
     }
 
     @Override

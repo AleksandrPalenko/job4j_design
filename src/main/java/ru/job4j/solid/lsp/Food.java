@@ -1,7 +1,6 @@
-package ru.job4j.solid;
+package ru.job4j.solid.lsp;
 
 import java.time.LocalDate;
-import java.time.temporal.TemporalAmount;
 import java.util.Objects;
 
 public class Food {
