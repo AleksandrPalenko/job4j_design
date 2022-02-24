@@ -47,18 +47,19 @@ public class ControlQualityTest {
     }
 
     @Test
-    public void whenFoodToCloseToExpired() {
+    public void whenFoodToCloseToExpiredAndDiscount() {
         Storage trash = new MemTrash();
         Storage shop = new MemShop();
         Storage warehouse = new MemWarehouse();
         ControlQuality controlQuality = new ControlQuality(List.of(trash, shop, warehouse));
         Food milk = new MilkFood("Milk",
-                LocalDate.now(),
-                LocalDate.now().minusDays(3),
+                LocalDate.now().plusDays(5),
+                LocalDate.now().minusDays(21),
                 100,
-                30);
+                0.4);
         controlQuality.sorted(milk);
-        assertThat(milk.getDiscount(), is(30.0));
+        assertThat(shop.storeFood().size(), is(1));
+        assertThat(shop.storeFood().get(0).getPrice(), is(60));
     }
 
     @Test
