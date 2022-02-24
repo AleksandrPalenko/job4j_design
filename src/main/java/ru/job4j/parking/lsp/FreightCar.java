@@ -2,15 +2,16 @@ package ru.job4j.parking.lsp;
 
 public class FreightCar implements Vehicles {
 
-    private final int size = 2;
+    private int size;
+
+    public FreightCar(int size) {
+        if (PassengerCar.SIZE >= 2) {
+            this.size = size;
+        }
+    }
 
     public int getSize() {
         return 2;
     }
 
-    @Override
-    public boolean add(Car car) {
-
-        return false;
-    }
 }

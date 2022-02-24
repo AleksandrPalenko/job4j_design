@@ -1,22 +1,25 @@
 package ru.job4j.parking.lsp;
 
+
 import java.util.List;
 
-public class ControlParking {
+public class ControlParking implements Parking {
 
-    private List<Vehicles> vehiclesList;
-    private String[] parking;
+    private final int parkingForPassenger;
+    private final int parkingForFreight;
+    List<Vehicles> vehicles;
 
-    public List<Vehicles> getVehiclesList() {
-        return vehiclesList;
+    public ControlParking(int parkingForPassenger, int parkingForFreight) {
+        this.parkingForPassenger = parkingForPassenger;
+        this.parkingForFreight = parkingForFreight;
     }
 
-    public void setVehiclesList(List<Vehicles> vehiclesList) {
-        this.vehiclesList = vehiclesList;
+    @Override
+    public boolean add(Vehicles vehicle) {
+        return false;
     }
 
-    public void getCars(Car car) {
-
+    public List<Vehicles> getVehicles() {
+        return List.copyOf(vehicles);
     }
-
 }
