@@ -4,14 +4,14 @@ public class FreightCar implements Vehicles {
 
     private int size;
 
-    public FreightCar(int size) {
-        if (PassengerCar.SIZE >= 2) {
-            this.size = size;
+    public FreightCar() {
+        if (PassengerCar.SIZE <= 2) {
+            throw new IllegalArgumentException("Invalid size for FreightCar");
         }
     }
 
     public int getSize() {
-        return 2;
+        return size;
     }
 
 }

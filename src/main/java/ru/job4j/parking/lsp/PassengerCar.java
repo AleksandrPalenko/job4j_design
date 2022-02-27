@@ -4,8 +4,11 @@ public class PassengerCar implements Vehicles {
 
     public static final int SIZE = 1;
 
+    public PassengerCar(int passengerCar) {
+    }
+
     public int getSize() {
-        return 1;
+        return SIZE;
     }
 
 }

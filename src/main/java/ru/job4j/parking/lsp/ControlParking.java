@@ -5,9 +5,13 @@ import java.util.List;
 
 public class ControlParking implements Parking {
 
-    private final int parkingForPassenger;
-    private final int parkingForFreight;
+    private int parkingForPassenger;
+    private int parkingForFreight;
     List<Vehicles> vehicles;
+
+    public ControlParking(List<Vehicles> vehicles) {
+        this.vehicles = vehicles;
+    }
 
     public ControlParking(int parkingForPassenger, int parkingForFreight) {
         this.parkingForPassenger = parkingForPassenger;
@@ -16,7 +20,20 @@ public class ControlParking implements Parking {
 
     @Override
     public boolean add(Vehicles vehicle) {
-        return false;
+        boolean rsl = false;
+        for (Vehicles vehicles1 : vehicles) {
+            if (vehicles1.getSize() == PassengerCar.SIZE) {
+                vehicles.add(vehicle);
+                parkingForPassenger += 1;
+                rsl = true;
+            } else if (vehicles1.getSize() > PassengerCar.SIZE) {
+                vehicles.add(vehicle);
+                parkingForFreight += 1;
+                rsl = true;
+            }
+        }
+        return rsl;
+
     }
 
     public List<Vehicles> getVehicles() {
