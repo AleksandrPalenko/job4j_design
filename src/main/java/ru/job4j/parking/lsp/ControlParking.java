@@ -21,12 +21,12 @@ public class ControlParking implements Parking {
     @Override
     public boolean add(Vehicles vehicle) {
         boolean rsl = false;
-        for (Vehicles vehicles1 : vehicles) {
-            if (vehicles1.getSize() == PassengerCar.SIZE) {
+        while (vehicles.size() >= vehicle.getSize()) {
+            if (vehicle.getSize() == PassengerCar.SIZE) {
                 vehicles.add(vehicle);
                 parkingForPassenger += 1;
                 rsl = true;
-            } else if (vehicles1.getSize() > PassengerCar.SIZE) {
+            } else if (vehicle.getSize() > PassengerCar.SIZE) {
                 vehicles.add(vehicle);
                 parkingForFreight += 1;
                 rsl = true;
@@ -36,7 +36,4 @@ public class ControlParking implements Parking {
 
     }
 
-    public List<Vehicles> getVehicles() {
-        return List.copyOf(vehicles);
-    }
 }

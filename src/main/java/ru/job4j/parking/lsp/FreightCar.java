@@ -10,6 +10,9 @@ public class FreightCar implements Vehicles {
         }
     }
 
+    public FreightCar(int freight) {
+    }
+
     public int getSize() {
         return size;
     }
