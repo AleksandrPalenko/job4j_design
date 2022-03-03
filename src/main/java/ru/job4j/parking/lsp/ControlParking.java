@@ -7,6 +7,8 @@ public class ControlParking implements Parking {
 
     private int parkingForPassenger;
     private int parkingForFreight;
+    private int countTrucks = 0;
+    private int countCars = 0;
     List<Vehicles> vehicles;
 
     public ControlParking(List<Vehicles> vehicles) {
@@ -20,20 +22,24 @@ public class ControlParking implements Parking {
 
     @Override
     public boolean add(Vehicles vehicle) {
-        boolean rsl = false;
-        while (vehicles.size() >= vehicle.getSize()) {
-            if (vehicle.getSize() == PassengerCar.SIZE) {
+        if (vehicle.getSize() == PassengerCar.SIZE) {
+            if (countCars < parkingForPassenger) {
                 vehicles.add(vehicle);
-                parkingForPassenger += 1;
-                rsl = true;
-            } else if (vehicle.getSize() > PassengerCar.SIZE) {
+                countCars++;
+            }
+        } else if (vehicle.getSize() > PassengerCar.SIZE) {
+            vehicles.add(vehicle);
+            if (parkingForFreight > PassengerCar.SIZE) {
                 vehicles.add(vehicle);
-                parkingForFreight += 1;
-                rsl = true;
+                countTrucks++;
+            }
+        } else if (vehicle.getSize() <= (parkingForPassenger - countCars)) {
+            if (parkingForFreight < 1 && parkingForPassenger > 1) {
+                vehicles.add(vehicle);
+                countCars = countCars + vehicle.getSize();
             }
         }
-        return rsl;
-
+        return true;
     }
 
 }
