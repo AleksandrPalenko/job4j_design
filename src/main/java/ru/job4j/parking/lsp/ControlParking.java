@@ -21,21 +21,28 @@ public class ControlParking implements Parking {
     @Override
     public boolean add(Vehicles vehicle) {
         boolean rsl = false;
-        if (vehicle.getSize() == PassengerCar.SIZE && parkingForPassenger > 1) {
+        boolean ruleCars = (parkingForPassenger - countCars) >= 1;
+        boolean ruleTruck = (parkingForFreight - countTrucks) >= 1;
+        if (vehicle.getSize() == PassengerCar.SIZE && ruleCars) {
             vehicles.add(vehicle);
             countCars++;
             rsl = true;
-        } else if (vehicle.getSize() > PassengerCar.SIZE && parkingForFreight > 1) {
+        } else if (vehicle.getSize() > PassengerCar.SIZE && ruleTruck) {
             vehicles.add(vehicle);
             countTrucks++;
             rsl = true;
         } else if (vehicle.getSize() > PassengerCar.SIZE && parkingForFreight < 1
-                && vehicle.getSize() <= parkingForPassenger) {
+                && vehicle.getSize() <= (parkingForPassenger - countCars)) {
             vehicles.add(vehicle);
-            parkingForPassenger += vehicle.getSize();
+            countTrucks = countCars + vehicle.getSize();
             rsl = true;
         }
         return rsl;
-    }
 
+    }
+/*
+- если машина имеет размер 1 и мест для легковых осталось больше 1,то добавлям
+- если машина имеет размер > 1 и мест для грузовых осталось  больше 1,то добавляем
+- если машина имеет размер > 1 и мест для грузовых нет,а для легковых мест хватает,для грузовой,то добавлям
+ */
 }
