@@ -19,7 +19,7 @@ public class ControlQuality {
         }
     }
 
-    public void resort(Food food) {
+    public void resort() {
         List<Food> product = new ArrayList<>();
         for (Storage store: storage) {
             product.addAll(store.storeFood());
