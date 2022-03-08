@@ -34,7 +34,7 @@ public class ControlParking implements Parking {
         } else if (vehicle.getSize() > PassengerCar.SIZE && parkingForFreight < 1
                 && vehicle.getSize() <= (parkingForPassenger - countCars)) {
             vehicles.add(vehicle);
-            countTrucks = countCars + vehicle.getSize();
+            countCars = countCars + vehicle.getSize();
             rsl = true;
         }
         return rsl;
