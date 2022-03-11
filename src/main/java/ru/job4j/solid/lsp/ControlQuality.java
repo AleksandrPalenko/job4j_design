@@ -23,6 +23,7 @@ public class ControlQuality {
         List<Food> product = new ArrayList<>();
         for (Storage store: storage) {
             product.addAll(store.storeFood());
+            store.cleared();
         }
         for (Food foods:product) {
             sorted(foods);

@@ -26,4 +26,9 @@ public class MemTrash implements Storage {
     public List<Food> storeFood() {
         return List.copyOf(list);
     }
+
+    @Override
+    public void cleared() {
+        list.clear();
+    }
 }
